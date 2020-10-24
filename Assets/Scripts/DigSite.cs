@@ -14,14 +14,17 @@ namespace Eternity
         {
             player = GameObject.FindGameObjectWithTag("Player");
             playerStats = player.GetComponent<Player>();
+        }
+
+        private void OnEnable()
+        {
             progress = 10;
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             float distance = Vector3.Distance(player.gameObject.transform.position, transform.position);
-            if (Input.GetKey(KeyCode.E) && distance < 1f)
+            if (distance < 1f)
             {
                 progress -= Time.deltaTime * speedMult;
                 Debug.Log("Progress: " + progress);
@@ -31,6 +34,15 @@ namespace Eternity
                     Debug.Log("Fragment collected. Fragments: " + playerStats.fragments);
                     gameObject.SetActive(false);
                 }
+            }
+        }
+        
+        private void OnTriggerEnter(Collider collider)
+        {
+            if (collider.gameObject.CompareTag("Water"))
+            {
+                progress = 10;
+                gameObject.SetActive(false);
             }
         }
     }

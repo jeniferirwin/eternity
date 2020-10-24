@@ -8,6 +8,7 @@ namespace Eternity
         public int hitGracePeriod;
         public float moveSpeed;
         public int fragments;
+        public bool willHeal;
 
         private bool isSafe;
         private bool isGrace;
@@ -15,7 +16,6 @@ namespace Eternity
 
         void Start()
         {
-            isSafe = true;
             if (hitPoints == 0)
             {
                 hitPoints = 3;
@@ -71,6 +71,13 @@ namespace Eternity
             if (collider.gameObject.CompareTag("SafeZone"))
             {
                 isSafe = true;
+                willHeal = false;
+            }
+
+            if (collider.gameObject.CompareTag("HealingSafeZone"))
+            {
+                isSafe = true;
+                willHeal = true;
             }
 
             if (collider.gameObject.CompareTag("Enemy") && !isGrace)
@@ -89,6 +96,24 @@ namespace Eternity
             if (collider.gameObject.CompareTag("SafeZone"))
             {
                 isSafe = false;
+                willHeal = false;
+            }
+
+            if (collider.gameObject.CompareTag("SafeZone"))
+            {
+                isSafe = false;
+                willHeal = false;
+            }
+            
+            if (collider.gameObject.CompareTag("Water"))
+            {
+                if (willHeal && hitPoints < 3)
+                {
+                    Debug.Log("Healing.");
+                    hitPoints++;
+                    isSafe = false;
+                    willHeal = false;
+                }
             }
         }
     }

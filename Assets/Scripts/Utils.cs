@@ -7,8 +7,8 @@ namespace Eternity
         // if this returns 0,0,0, we need to ignore the attempt to spawn
         public static Vector3 PickRandomLocation()
         {
-            float xbounds = 124;
-            float zbounds = 124;
+            float xbounds = 73;
+            float zbounds = 73;
 
             Vector3 potentialPos = new Vector3(0,0,0);
             Vector3 halfExtents = new Vector3(1,1,1);
