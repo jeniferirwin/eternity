@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 namespace Eternity
 {
@@ -16,6 +17,7 @@ namespace Eternity
         public int numDigSites;
         public int numSafeZones;
         public int numHealingSafeZones;
+        public TMP_Text timertext;
 
         private int currentTimerMax;
         private int currentTimerCountdown;
@@ -39,7 +41,7 @@ namespace Eternity
         {
             firstRound = true;
             ResetSafeZones();
-            GetAllSafeZones()[0].transform.position = new Vector3(0,10,0);  // DIS-GUSS-TAAANG
+            GetAllSafeZones()[0].transform.position = new Vector3(0,0,0);  // DIS-GUSS-TAAANG
             ActivateSafeZones();
             startPosition = transform.position;
             currentTimerMax = initTimer;
@@ -64,6 +66,7 @@ namespace Eternity
                 {
                     frameTick = 1;
                     currentTimerCountdown -= 1;
+                    timertext.text = "Timer: " + currentTimerCountdown;
                 }
                 
                 if (currentTimerCountdown < (currentTimerMax * 0.75) && !zonesActive)

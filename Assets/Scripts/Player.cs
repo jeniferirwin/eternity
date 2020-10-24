@@ -91,7 +91,7 @@ namespace Eternity
             }
         }
 
-        private void OnTriggerExit(Collider collider)
+        public void OnTriggerExit(Collider collider)
         {
             if (collider.gameObject.CompareTag("SafeZone"))
             {

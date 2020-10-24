@@ -4,7 +4,6 @@ namespace Eternity
 {
     public class EternityUtils
     {
-        // if this returns 0,0,0, we need to ignore the attempt to spawn
         public static Vector3 PickRandomLocation()
         {
             float xbounds = 73;
@@ -20,14 +19,7 @@ namespace Eternity
                 float zpos = Random.Range(-zbounds, zbounds);
                 potentialPos = new Vector3(xpos, 0, zpos);
 
-                Debug.Log("Testing location: " + potentialPos);
-                
                 RaycastHit[] hits = Physics.BoxCastAll(potentialPos + new Vector3(0,5,0), halfExtents, Vector3.down, Quaternion.identity, 10);
-
-                foreach (RaycastHit hit in hits)
-                {
-                    Debug.Log("Found object: " + hit.collider.gameObject.name);
-                }
 
                 if (hits.Length == 1)
                 {
@@ -42,6 +34,7 @@ namespace Eternity
                     break;
                 }
             }
+            Debug.Log("New position: " + potentialPos);
 
             return potentialPos;
         }
