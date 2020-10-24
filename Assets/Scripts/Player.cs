@@ -13,13 +13,11 @@ namespace Eternity
         private bool isSafe;
         private bool isGrace;
         private float gracePeriodTicker;
+        private Modifiers modifiers;
 
         void Start()
         {
-            if (hitPoints == 0)
-            {
-                hitPoints = 3;
-            }
+            modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
         }
 
         void Update()
@@ -42,13 +40,13 @@ namespace Eternity
             float haxis = Input.GetAxis("Horizontal");
             float vaxis = Input.GetAxis("Vertical");
 
-            transform.Translate(new Vector3(haxis, 0, vaxis) * moveSpeed * Time.deltaTime);
+            transform.Translate(new Vector3(haxis, 0, vaxis) * moveSpeed * Time.deltaTime * (1 + fragments / 50));
         }
 
         private void GetHit()
         {
-            hitPoints -= 1;
-            if (hitPoints == 0)
+            modifiers.DecrementHitPoints();
+            if (modifiers.hitPoints <= 0)
             {
                 Die();
             }
@@ -61,9 +59,8 @@ namespace Eternity
 
         private void Die()
         {
-            Debug.Log("Dying.");
+            modifiers.SetGameOver();
             gameObject.SetActive(false);
-
         }
 
         private void OnTriggerEnter(Collider collider)
@@ -107,10 +104,9 @@ namespace Eternity
             
             if (collider.gameObject.CompareTag("Water"))
             {
-                if (willHeal && hitPoints < 3)
+                if (willHeal && modifiers.hitPoints < 3)
                 {
-                    Debug.Log("Healing.");
-                    hitPoints++;
+                    modifiers.IncrementHitPoints();
                     isSafe = false;
                     willHeal = false;
                 }

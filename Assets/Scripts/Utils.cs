@@ -34,7 +34,6 @@ namespace Eternity
                     break;
                 }
             }
-            Debug.Log("New position: " + potentialPos);
 
             return potentialPos;
         }

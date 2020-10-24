@@ -6,6 +6,7 @@ namespace Eternity
 {
     public class Water : MonoBehaviour
     {
+        public Modifiers modifiers;
         public int initTimer;
         public int timerStep;
         public float moveSpeed;
@@ -14,10 +15,7 @@ namespace Eternity
         public ObjectPool healingSafeZonePool;
         public ObjectPool safeZonePool;
         public Player player;
-        public int numDigSites;
-        public int numSafeZones;
-        public int numHealingSafeZones;
-        public TMP_Text timertext;
+        public UI ui;
 
         private int currentTimerMax;
         private int currentTimerCountdown;
@@ -40,18 +38,23 @@ namespace Eternity
         void Start()
         {
             firstRound = true;
+            modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
+            ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
             ResetSafeZones();
             GetAllSafeZones()[0].transform.position = new Vector3(0,0,0);  // DIS-GUSS-TAAANG
             ActivateSafeZones();
             startPosition = transform.position;
             currentTimerMax = initTimer;
             currentTimerCountdown = currentTimerMax;
-            numDigSites--;
             ResetSpawns();
         }
 
         void Update()
         {
+            if (modifiers.GameOver)
+            {
+                return;
+            }
             if (firstRound)
             {
                 crashing = true;
@@ -66,7 +69,7 @@ namespace Eternity
                 {
                     frameTick = 1;
                     currentTimerCountdown -= 1;
-                    timertext.text = "Timer: " + currentTimerCountdown;
+                    ui.UpdateTimer(currentTimerCountdown);
                 }
                 
                 if (currentTimerCountdown < (currentTimerMax * 0.75) && !zonesActive)
@@ -89,6 +92,7 @@ namespace Eternity
                 currentTimerCountdown = currentTimerMax;
                 ResetSpawns();
                 ResetSafeZones();
+                modifiers.IncrementRoundsCompleted();
                 return;
             }
 
@@ -97,10 +101,7 @@ namespace Eternity
 
         public void ResetSpawns()
         {
-            int numEnemies = player.fragments * 2;
-            numDigSites += 2;
-
-            for (int i = 0; i < numEnemies; i++)
+            for (int i = 0; i < modifiers.NumEnemies; i++)
             {
                 Vector3 spawnPos = EternityUtils.PickRandomLocation();
                 GameObject enemy = enemyPool.GetRandomInactiveObject();
@@ -108,7 +109,7 @@ namespace Eternity
                 enemy.SetActive(true);
             }
 
-            for (int i = 0; i < numDigSites; i++)
+            for (int i = 0; i < modifiers.NumDigSites; i++)
             {
                 Vector3 spawnPos = EternityUtils.PickRandomLocation();
                 GameObject digSite = digSitePool.GetRandomInactiveObject();
@@ -132,10 +133,15 @@ namespace Eternity
         
         public void ActivateSafeZones()
         {
-            List<GameObject> safeZones = GetAllSafeZones();
-            foreach (GameObject safeZone in safeZones)
+            for (int i = 0; i < modifiers.NumSafeZones; i++)
             {
+                GameObject safeZone = safeZonePool.GetRandomInactiveObject();
                 safeZone.SetActive(true);
+            }
+            for (int i = 0; i < modifiers.NumHealingSafeZones; i++)
+            {
+                GameObject healingSafeZone = healingSafeZonePool.GetRandomInactiveObject();
+                healingSafeZone.SetActive(true);
             }
             zonesActive = true;
             Debug.Log("Safe zones activated.");

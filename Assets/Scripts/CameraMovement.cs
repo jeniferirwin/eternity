@@ -8,13 +8,8 @@ namespace Eternity
         public Vector3 hoverPos;
 
         private Vector3 lastFramePos;
-        private float xbound = 109;
-        private float zbound = 115;
-
-        // left boundary is -109
-        // right boundary is 109?
-        // upper boundary is 115
-        // lower boundary is -115?
+        private float xbound = 50;
+        private float zbound = 60;
 
         void LateUpdate()
         {

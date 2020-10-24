@@ -4,21 +4,42 @@ namespace Eternity
 {
     public class Enemy : MonoBehaviour
     {
-        public float moveSpeed;
+        public float maxSpeed;
+        public Modifiers modifiers;
+        
+        private float moveSpeed;
 
         private GameObject player;
         private bool touchingPlayer;
         private float pauseTimer;
         private Vector3 lastPos;
         private bool touchingSafeZone;
+        private float startpause;
 
         void OnEnable()
         {
+            modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
+            if (modifiers.GameOver)
+            {
+                gameObject.SetActive(false);
+            }
+            startpause = 1;
             player = GameObject.FindGameObjectWithTag("Player");
+            moveSpeed = Random.Range(maxSpeed / 2, maxSpeed);
         }
 
         void Update()
         {
+            if (modifiers.GameOver)
+            {
+                return;
+            }
+            if (startpause > 0)
+            {
+                startpause -= Time.deltaTime;
+                return;
+            }
+
             if (pauseTimer >= 0)
             {
                 pauseTimer -= Time.deltaTime;
@@ -68,6 +89,7 @@ namespace Eternity
                 if (safeZoneStats.playerTouching)
                 {
                     safeZoneStats.ExpendCharge();
+                    modifiers.IncrementEnemiesKilled();
                     Die();
                 }
             }

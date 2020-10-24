@@ -9,9 +9,11 @@ namespace Eternity
         public float flashSpeed;
         public int charges;
         public bool playerTouching;
+        public Modifiers modifiers;
 
 
         private bool vanishing;
+        private int currentCharges;
         private bool dimming;
         private float maxIntensity;
 
@@ -23,15 +25,21 @@ namespace Eternity
 
         private void OnEnable()
         {
+            modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
             playerTouching = false;
+            currentCharges = charges;
         }
 
         public void ExpendCharge()
         {
-            charges--;
-            if (charges <= 0)
+            currentCharges--;
+            if (currentCharges == 0)
             {
                 vanishing = true;
+                if (gameObject.CompareTag("HealingSafeZone"))
+                {
+                    modifiers.IncrementHitPoints();
+                }
             }
         }
 
@@ -68,7 +76,6 @@ namespace Eternity
         {
             if (collider.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Player is touching a safe zone.");
                 playerTouching = true;
             }
         }
@@ -77,14 +84,12 @@ namespace Eternity
         {
             if (collider.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Player stopped touching a safe zone.");
                 playerTouching = false;
             }
             
             if (collider.gameObject.CompareTag("Water"))
             {
                 vanishing = true;
-                Debug.Log("Safe zone is going away.");
             }
         }
     }
