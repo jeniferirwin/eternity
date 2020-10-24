@@ -2,14 +2,14 @@
 
 namespace Eternity
 {
-    public class Utils
+    public class EternityUtils
     {
-        float xbounds = 124;
-        float zbounds = 124;
-
         // if this returns 0,0,0, we need to ignore the attempt to spawn
-        public Vector3 PickRandomLocation()
+        public static Vector3 PickRandomLocation()
         {
+            float xbounds = 124;
+            float zbounds = 124;
+
             Vector3 potentialPos = new Vector3(0,0,0);
             Vector3 halfExtents = new Vector3(1,1,1);
             bool posFound = false;
@@ -22,7 +22,7 @@ namespace Eternity
 
                 Debug.Log("Testing location: " + potentialPos);
                 
-                RaycastHit[] hits = Physics.BoxCastAll(potentialPos, halfExtents, Vector3.down, Quaternion.identity, 10);
+                RaycastHit[] hits = Physics.BoxCastAll(potentialPos + new Vector3(0,5,0), halfExtents, Vector3.down, Quaternion.identity, 10);
 
                 foreach (RaycastHit hit in hits)
                 {

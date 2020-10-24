@@ -7,6 +7,7 @@ namespace Eternity
         public int hitPoints;
         public int hitGracePeriod;
         public float moveSpeed;
+        public int fragments;
 
         private bool isSafe;
         private bool isGrace;

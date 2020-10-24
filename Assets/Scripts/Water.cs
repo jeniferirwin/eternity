@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Eternity;
 
 namespace Eternity
 {
@@ -7,6 +8,10 @@ namespace Eternity
         public int initTimer;
         public int timerStep;
         public float moveSpeed;
+        public ObjectPool enemyPool;
+        public ObjectPool digSitePool;
+        public Player player;
+        public int digSites = 4;
 
         private int currentTimerMax;
         private int currentTimerCountdown;
@@ -50,16 +55,39 @@ namespace Eternity
                 return;
             }
 
-            if (crashing && Vector3.Distance(transform.position, endPosition) < 1.0f)
+            if (crashing && transform.position.x >= Mathf.Abs(startPosition.x))
             {
                 crashing = false;
                 transform.position = startPosition;
                 currentTimerMax += timerStep;
                 currentTimerCountdown = currentTimerMax;
+                ResetSpawns();
                 return;
             }
 
             transform.Translate(movement * moveSpeed * Time.deltaTime);
+        }
+
+        public void ResetSpawns()
+        {
+            int numEnemies = player.fragments * 2;
+            digSites++;
+
+            for (int i = 0; i < numEnemies; i++)
+            {
+                Vector3 spawnPos = EternityUtils.PickRandomLocation();
+                GameObject enemy = enemyPool.GetRandomInactiveObject();
+                enemy.transform.position = spawnPos;
+                enemy.SetActive(true);
+            }
+
+            for (int i = 0; i < digSites; i++)
+            {
+                Vector3 spawnPos = EternityUtils.PickRandomLocation();
+                GameObject digSite = digSitePool.GetRandomInactiveObject();
+                digSite.transform.position = spawnPos;
+                digSite.SetActive(true);
+            }
         }
     }
 }
