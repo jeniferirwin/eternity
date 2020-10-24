@@ -11,8 +11,11 @@ namespace Eternity
         public int fragmentsGathered = 0; // affects the number of enemies that spawn
         public int hitPoints = 3; // player health
         public bool GameOver = false;
+        public float maxGracePeriod = 1.5f;
+        public float gracePeriodTicker;
+        public bool willHeal;
         
-        private void Start()
+        private void Awake()
         {
             ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
         }
@@ -20,6 +23,17 @@ namespace Eternity
         public void SetGameOver()
         {
             GameOver = true;
+        }
+
+        public void StartGracePeriod()
+        {
+            gracePeriodTicker = maxGracePeriod;
+        }
+
+        public void Update()
+        {
+            if (gracePeriodTicker > 0)
+                gracePeriodTicker -= Time.deltaTime;
         }
         
         public void IncrementEnemiesKilled()
@@ -46,6 +60,7 @@ namespace Eternity
             {
                 hitPoints = 3;
             }
+            willHeal = false;
             ui.UpdateHitPoints(hitPoints);
         }
         
@@ -57,6 +72,7 @@ namespace Eternity
                 hitPoints = 0;
             }
             ui.UpdateHitPoints(hitPoints);
+            StartGracePeriod();
         }
 
         public float DigSpeedMulitplier
