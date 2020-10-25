@@ -24,7 +24,7 @@ namespace Eternity
             }
             player = GameObject.FindGameObjectWithTag("Player");
             progress = 10f;
-            originalScale = new Vector3(3,1,3);
+            originalScale = new Vector3(1,1,1);
             transform.localScale = originalScale;
         }
 

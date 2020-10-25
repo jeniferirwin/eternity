@@ -137,7 +137,7 @@ namespace Eternity
         {
             get
             {
-                return (1 + (fragmentsGathered * 2));
+                return (1 + Mathf.RoundToInt(fragmentsGathered * 1.5f));
             }
         }
     }

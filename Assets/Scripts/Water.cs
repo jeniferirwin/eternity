@@ -89,6 +89,7 @@ namespace Eternity
                 transform.position = startPosition;
                 currentTimerTicker = currentTimerMax;
                 zonesActive = false;
+                player.isSafe = false;
                 modifiers.IncrementRoundsCompleted();
                 spawns.ResetAllSpawns();
                 spawns.SpawnDigSites();

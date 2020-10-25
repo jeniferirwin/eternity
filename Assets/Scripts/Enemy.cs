@@ -7,6 +7,8 @@ namespace Eternity
         public float maxSpeed;
         public int pauseTimer;
         public Modifiers modifiers;
+        public Animator enemyAnimator;
+        public GameObject enemyContainer;
         
         private float moveSpeed;
 
@@ -39,12 +41,15 @@ namespace Eternity
 
             if (currentPauseTimer >= 0)
             {
+                enemyAnimator.SetBool("isWalking", false);
                 currentPauseTimer -= Time.deltaTime;
                 return;
             }
 
             Vector3 moveDir = (player.transform.position - transform.position).normalized;
             transform.Translate(moveDir * moveSpeed * Time.deltaTime);
+            enemyAnimator.SetBool("isWalking", true);
+            enemyContainer.transform.LookAt(player.transform.position);
         }
 
         public void DieWater()

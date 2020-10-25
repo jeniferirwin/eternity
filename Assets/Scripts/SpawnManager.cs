@@ -60,7 +60,6 @@ namespace Eternity
 
         public void SpawnSafeZones()
         {
-            Debug.Log("Spawning number of safe zones: " + modifiers.NumSafeZones);
             for (int i = 0; i < modifiers.NumSafeZones; i++)
             {
                 GameObject safeZone = safeZonePool.GetRandomInactiveObject();
@@ -71,7 +70,6 @@ namespace Eternity
 
         public void SpawnHealingSafeZones()
         {
-            Debug.Log("Spawning number of healing safe zones: " + modifiers.NumHealingSafeZones);
             for (int i = 0; i < modifiers.NumHealingSafeZones; i++)
             {
                 GameObject healingSafeZone = healingSafeZonePool.GetRandomInactiveObject();
@@ -133,9 +131,10 @@ namespace Eternity
         for (int i = 0; i < numSpawns; i++)
         {
             Vector3 newPos = RandomPosition();
+            newPos += new Vector3(0,1,0);
             while (!IsPosDistancedFromList(newPos, newDigSites, 15) && !IsPosDistancedFromList(newPos, healingSafeZones, 5) && !IsPosDistancedFromList(newPos, safeZones, 5))
             {
-                newPos = RandomPosition();
+                newPos = RandomPosition() + new Vector3(0,1,0);
             }
             newDigSites.Add(newPos);
         }
@@ -174,8 +173,10 @@ namespace Eternity
 
     public Vector3 RandomPosition()
     {
-        float xpos = Random.Range(-bounds, bounds);
-        float zpos = Random.Range(-bounds, bounds);
+        float xbounds = 67;
+        float zbounds = 70; 
+        float xpos = Random.Range(-xbounds, xbounds);
+        float zpos = Random.Range(-zbounds, zbounds);
         return new Vector3(xpos, 0, zpos);
     }
 }
