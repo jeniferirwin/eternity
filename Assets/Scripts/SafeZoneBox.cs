@@ -10,11 +10,13 @@ namespace Eternity
         private int currentCharges;
         private bool playerTouching;
         private Modifiers modifiers;
+        private Player player;
 
         private void Awake()
         {
             currentCharges = maxCharges;
             modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             playerTouching = false;
         }
 
@@ -25,18 +27,15 @@ namespace Eternity
         
         private void Update()
         {
-            if (transform.parent.position.y > 10)
-            {
-                gameObject.transform.parent.gameObject.SetActive(false);
-            }
             if (currentCharges <= 0)
             {
                 if (isHealing && playerTouching)
                 {
                     modifiers.IncrementHitPoints();
                 }
-                transform.parent.Translate(Vector3.up * 50);
                 playerTouching = false;
+                player.isSafe = false;
+                gameObject.transform.parent.gameObject.SetActive(false);
             }
         }
 

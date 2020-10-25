@@ -101,9 +101,11 @@ namespace Eternity
             for (int i = 0; i < numSpawns; i++)
             {
                 Vector3 newPos = RandomPosition();
-                while (!IsPosDistancedFromList(newPos, newSafeZones, 25))
+                float tries = 100;
+                while (!IsPosDistancedFromList(newPos, newSafeZones, 25) && tries > 0)
                 {
                     newPos = RandomPosition();
+                    tries--;
                 }
                 newSafeZones.Add(newPos);
             }
@@ -116,9 +118,11 @@ namespace Eternity
         for (int i = 0; i < numSpawns; i++)
         {
             Vector3 newPos = RandomPosition();
-            while (!IsPosDistancedFromList(newPos, newHealingSafeZones, 40) && !IsPosDistancedFromList(newPos, healingSafeZones, 25))
+            float tries = 100;
+            while (!IsPosDistancedFromList(newPos, newHealingSafeZones, 30) || !IsPosDistancedFromList(newPos, healingSafeZones, 20) && tries > 0)
             {
                 newPos = RandomPosition();
+                tries--;
             }
             newHealingSafeZones.Add(newPos);
         }
@@ -132,9 +136,11 @@ namespace Eternity
         {
             Vector3 newPos = RandomPosition();
             newPos += new Vector3(0,1,0);
-            while (!IsPosDistancedFromList(newPos, newDigSites, 15) && !IsPosDistancedFromList(newPos, healingSafeZones, 5) && !IsPosDistancedFromList(newPos, safeZones, 5))
+            float tries = 100;
+            while (!IsPosDistancedFromList(newPos, newDigSites, 15) && !IsPosDistancedFromList(newPos, healingSafeZones, 5) && !IsPosDistancedFromList(newPos, safeZones, 5) && tries > 0)
             {
                 newPos = RandomPosition() + new Vector3(0,1,0);
+                tries--;
             }
             newDigSites.Add(newPos);
         }
@@ -147,9 +153,11 @@ namespace Eternity
         for (int i = 0; i < numSpawns; i++)
         {
             Vector3 newPos = RandomPosition();
-            while (!IsPosDistancedFromList(newPos, newEnemies, 8) && Vector3.Distance(newPos, player.transform.position) < 15)
+            float tries = 100;
+            while (!IsPosDistancedFromList(newPos, newEnemies, 8) && Vector3.Distance(newPos, player.transform.position) < 15 && tries > 0)
             {
                 newPos = RandomPosition();
+                tries--;
             }
             newEnemies.Add(newPos);
         }

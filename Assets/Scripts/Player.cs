@@ -98,6 +98,11 @@ namespace Eternity
             {
                 isSafe = false;
             }
+            
+            if (collider.gameObject.CompareTag("Water"))
+            {
+                isSafe = false;
+            }
         }
     }
 }
