@@ -21,7 +21,7 @@ namespace Eternity
 
         void OnEnable()
         {
-            if (modifiers.GameOver)
+            if (modifiers.gameOver)
             {
                 gameObject.SetActive(false);
             }
@@ -32,7 +32,7 @@ namespace Eternity
 
         void Update()
         {
-            if (modifiers.GameOver)
+            if (modifiers.gameOver)
             {
                 return;
             }

@@ -6,6 +6,8 @@ namespace Eternity
 {
     public class Water : MonoBehaviour
     {
+        public AudioManager audioManager;
+        public AudioClip waveCrash;
         public Modifiers modifiers;
         public GameObject firstSafeZone;
         public SpawnManager spawns;
@@ -41,7 +43,7 @@ namespace Eternity
         void Update()
         {
 
-            if (modifiers.GameOver)
+            if (modifiers.gameOver)
             {
                 return;
             }
@@ -66,6 +68,7 @@ namespace Eternity
                 if (currentTimerTicker <= 0)
                 {
                     crashing = true;
+                    audioManager.PlayWave();
                 }
                 return;
             }

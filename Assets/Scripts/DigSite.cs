@@ -4,6 +4,8 @@ namespace Eternity
 {
     public class DigSite : MonoBehaviour
     {
+        public AudioManager audioManager;
+        public AudioClip diggingClip;
         public Modifiers modifiers;
         public float speedMult;
         public Vector3 originalScale;
@@ -15,7 +17,8 @@ namespace Eternity
         private void OnEnable()
         {
             modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
-            if (modifiers.GameOver)
+            audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+            if (modifiers.gameOver)
             {
                 gameObject.SetActive(false);
             }
@@ -27,7 +30,7 @@ namespace Eternity
 
         private void Update()
         {
-            if (modifiers.GameOver)
+            if (modifiers.gameOver)
             {
                 return;
             }
@@ -35,6 +38,7 @@ namespace Eternity
             float distance = Vector3.Distance(player.transform.position, transform.position);
             if (distance < 1.5f)
             {
+                audioManager.PlayDigging();
                 float chunk = Time.deltaTime * speedMult * modifiers.DigSpeedMulitplier;
                 progress -= chunk;
                 float scalechunk = chunk / 10;

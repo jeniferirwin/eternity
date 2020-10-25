@@ -5,24 +5,34 @@ namespace Eternity
     public class Modifiers : MonoBehaviour
     {
         public UI ui;
+        public GameObject hud;
+        public GameObject gameOverScreen;
+        public GameObject winScreen;
+
+        public AudioManager audioManager;
 
         public int enemiesKilled = 0; // affects the player's digging and movement speed
         public int roundsCompleted = 0; // affects the number of digsites and safe zones that spawn
         public int fragmentsGathered = 0; // affects the number of enemies that spawn
         public int hitPoints = 3; // player health
-        public bool GameOver = false;
+        public bool gameOver = false;
+        public bool gameWon = false;
         public float maxGracePeriod = 1.5f;
         public float gracePeriodTicker;
         public bool willHeal;
         
-        private void Awake()
-        {
-            ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
-        }
-        
         public void SetGameOver()
         {
-            GameOver = true;
+            gameOver = true;
+            hud.SetActive(false);
+            gameOverScreen.SetActive(true);
+        }
+        
+        public void SetWin()
+        {
+            hud.SetActive(false);
+            winScreen.SetActive(true);
+            gameWon = true;
         }
 
         public void StartGracePeriod()
@@ -39,13 +49,20 @@ namespace Eternity
         public void IncrementEnemiesKilled()
         {
             enemiesKilled++;
+            audioManager.PlayZap();
             ui.UpdateEnemiesKilled(enemiesKilled);
         }
         
         public void IncrementFragmentsGathered()
         {
             fragmentsGathered++;
+            audioManager.PlayCollect();
             ui.UpdateFragments(fragmentsGathered);
+            if (fragmentsGathered >= 50)
+            {
+                Time.timeScale = 0;
+                SetWin();
+            }
         }
         
         public void IncrementRoundsCompleted()
@@ -67,6 +84,7 @@ namespace Eternity
         public void DecrementHitPoints()
         {
             hitPoints--;
+            audioManager.PlayHit();
             if (hitPoints < 0)
             {
                 hitPoints = 0;

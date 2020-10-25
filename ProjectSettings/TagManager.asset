@@ -12,6 +12,7 @@ TagManager:
   - Water
   - Modifiers
   - UI
+  - AudioManager
   layers:
   - Default
   - TransparentFX
