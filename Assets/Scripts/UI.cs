@@ -18,21 +18,21 @@ public class UI : MonoBehaviour
 
     public void UpdateTimer(int value)
     {
-        timer.text = "Flood Timer: " + value;
+        timer.text = value.ToString();
     }
     
     public void UpdateHitPoints(int value)
     {
-        hitPoints.text = "HP: " + value;
+        hitPoints.text = value.ToString();
     }
 
     public void UpdateFragments(int value)
     {
-        fragmentsGathered.text = "Fragments Gathered: " + value;
+        fragmentsGathered.text = value.ToString() + "/50";
     }
     
     public void UpdateEnemiesKilled(int value)
     {
-        enemiesKilled.text = "Enemies Killed: " + value;
+        enemiesKilled.text = value.ToString();
     } 
 }
