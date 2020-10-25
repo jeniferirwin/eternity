@@ -103,7 +103,7 @@ namespace Eternity
         {
             get
             {
-                return (5 + (roundsCompleted));
+                return (3 + (roundsCompleted));
             }
         }
 
@@ -111,7 +111,7 @@ namespace Eternity
         {
             get
             {
-                return (2 + (roundsCompleted));
+                return (1 + (roundsCompleted));
             }
         }
 

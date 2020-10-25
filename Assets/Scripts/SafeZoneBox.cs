@@ -24,7 +24,7 @@ namespace Eternity
         
         private void Update()
         {
-            if (transform.position.y > 10)
+            if (transform.parent.position.y > 10)
             {
                 gameObject.transform.parent.gameObject.SetActive(false);
             }
@@ -34,7 +34,7 @@ namespace Eternity
                 {
                     modifiers.IncrementHitPoints();
                 }
-                transform.Translate(Vector3.up * 50);
+                transform.parent.Translate(Vector3.up * 50);
             }
         }
 

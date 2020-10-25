@@ -51,6 +51,14 @@ namespace Eternity
             }
             return _activeObjects;
         }
+        
+        public void DeactivateAllObjects()
+        {
+            foreach (GameObject obj in GetAllActiveObjects())
+            {
+                obj.SetActive(false);
+            }
+        }
 
         /// <summary>
         /// Gets all currently inactive objects in our pool.
