@@ -15,6 +15,7 @@ namespace Eternity
         {
             currentCharges = maxCharges;
             modifiers = GameObject.FindGameObjectWithTag("Modifiers").GetComponent<Modifiers>();
+            playerTouching = false;
         }
 
         private void OnEnable()
@@ -35,6 +36,7 @@ namespace Eternity
                     modifiers.IncrementHitPoints();
                 }
                 transform.parent.Translate(Vector3.up * 50);
+                playerTouching = false;
             }
         }
 

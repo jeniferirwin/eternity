@@ -3470,31 +3470,31 @@ MonoBehaviour:
     sacred chamber...
 
 
-    Stand on brown digsites until they vanish to gather fragments.
+    Use WASD to move. Stand on brown digsites until they
+    vanish to gather fragments.
 
 
-    At
-    50 fragments, you win the game, but the more fragments you get, the more zombies
-    will appear to attack you...
+    At 50 fragments, you win the game, but the
+    more fragments you get, the more zombies will appear to attack you...
 
 
-    Glowing safe zones protect you from a limited
-    number of zombies per zone. They vanish when depleted; green ones heal you when
-    depleted!
+    Glowing
+    safe zones protect you from a limited number of zombies per zone. They vanish
+    when depleted; green ones heal you when depleted!
 
 
-    You MUST be in a safe zone to survive the timed water waves!
+    You MUST be in a safe
+    zone to survive the timed water waves!
 
 
-    The
-    timer until the next wave increases slightly with each round.
+    The timer until the next wave increases
+    slightly with each round.
 
 
-    Killing enemies
-    with safe zones gives you a stacking
+    Killing enemies with safe zones gives you a stacking
 
-    dig speed bonus... and you''ll need
-    it.'
+    dig
+    speed bonus... and you''ll need it.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
